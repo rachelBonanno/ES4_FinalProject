@@ -1,0 +1,6 @@
+#Start recording tcl command: 12/2/2023 14:26:57
+#Project Location: C:/Users/rbonan02/Desktop/workingcolorbackground12_2_1456; Project name: workingcolorbackroung
+prj_open "C:/Users/rbonan02/Desktop/workingcolorbackground12_2_1456/workingcolorbackroung.rdf"
+prj_run PAR -impl impl_1
+prj_run Export -impl impl_1
+#Stop recording: 12/2/2023 14:27:34
