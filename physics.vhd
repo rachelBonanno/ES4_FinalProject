@@ -2,59 +2,47 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+-- physics is responsible for updating the current x and y position
 entity physics is
   port(
-    clk_VGA : in std_logic;
-    Player1 : in std_logic;
-    Player2 : in std_logic;
-    angle : in unsigned(2 downto 0);
-	clk_Physics : out std_logic;
-    x : out unsigned(8 downto 0);
-    y : out unsigned(8 downto 0)
+	  fire: in std_logic;
+      ball_x : out unsigned(9 downto 0) := 10d"400"; -- row
+      ball_y : out unsigned(9 downto 0) := 10d"100"; -- col
+      frame_clk : in std_logic
   );
 end;
 
 architecture synth of physics is
 
-signal count : unsigned(20 downto 0);
+signal v_col_p1 : integer := 0;
+signal v_row_p1 : integer := 0;
+constant g : integer := 1;
+signal angle : unsigned(2 downto 0) := "001"; -- 15 degrees
+signal fired : std_logic := '0';
 
-signal Delta : unsigned(2 downto 0);
-signal T : unsigned(5 downto 0);
 begin
-
-
-process (clk_VGA) begin
-	if rising_edge(clk_VGA) then
-		count <= count + '1';
+process(frame_clk) begin
+	-- after setting initial col and row velocity
+	if rising_edge(frame_clk) then
+		if fired = '1' then
+			--ball_y <= ball_y - 1 ;
+			ball_y <= ball_y+ v_col_p1;
+			ball_x <= ball_x + v_row_p1;
+			-- update vertical velocity
+			v_row_p1 <= v_row_p1 + g;
+			if ball_y > 640 or ball_x > 480 then
+				v_col_p1 <= 19; v_row_p1 <= -11;
+				ball_x <= 10d"400"; ball_y <= 10d"100";
+				fired <= '0';
+			end if;
+		end if;
 	end if;
-	clk_Physics <= count(8);
+	if fire = '1' then 
+		fired <= '1';
+		-- set up initial velocity of the ball
+		v_col_p1 <= 19;  v_row_p1 <= -11;
 	
+	end if;
+	end process;
 
-	If rising_edge(clk_physics) then 
-
-		T <= T + 1;
-        Y <= 479 - 3*T + 3*T*T;
-		
-		
-		If Player1 then
-			X <= 1 + Delta;
-			
-		Elsif player2 then 
-			x<= 640 - Delta;
-		End if;
-
-	End if;
-End process;
-Delta <= "000" when angle = "111" else
-     3b"0" when angle = "110" else
-	 3b"0" when angle = "101" else
-	 3b"0" when angle = "100" else
-	 3b"0" when angle = "011" else
-	 3b"0" when angle = "001" else
-	 3b"0" ;
-	 
-    T <= 6b"0" when y = 9b"0";
-	x <= 6b"0" when y = 9b"0";
-end;
-
-
+end synth;

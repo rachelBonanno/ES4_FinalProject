@@ -51,6 +51,6 @@ architecture synth of vga is
 		valid <= '1' when row < 480 and col < 640 else '0';
 				            
 	
-full_frame_clk <= count(3);
+full_frame_clk <= count(5);
 
 end architecture synth;
