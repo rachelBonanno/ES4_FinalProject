@@ -6,8 +6,8 @@ entity NES is
   port(
     latch : out std_logic;     
 	
-	data : in std_logic;
-	dataout : out unsigned(7 downto 0);
+	data : in std_logic := '0';
+	dataout : out unsigned(7 downto 0):= "00000000";
 	nesclk : out std_logic
 
 --	controllerclk : out std_logic
@@ -30,7 +30,7 @@ architecture synth of NES is
 
 signal count : unsigned(20 downto 0);
 signal nescount : unsigned(7 downto 0);
-signal inputs : unsigned(7 downto 0);
+signal inputs : unsigned(7 downto 0) := "00000000";
 signal clk : std_logic;
 begin  
 
