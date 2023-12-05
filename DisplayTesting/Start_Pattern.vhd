@@ -189,7 +189,7 @@ elleRow2 <= row_idx - 375;
 	-- (fire = '1' and playing_screen = '1')
 		
 		gamepixels <= ball_signal when (row_idx > ball_x1 and row_idx < ball_x1 + 10 and col_idx > ball_y1 + 27 and col_idx + 10 < ball_y1 + 50) or 
-		(row_idx > ball_x2 and row_idx < ball_x2 + 10 and col_idx + 600 > ball_y2 and col_idx + 600 < ball_y2 + 10) 
+		(row_idx > ball_x2 and row_idx < ball_x2 + 10 and col_idx  > ball_y2 and col_idx < ball_y2 +10) 
 		else elL when (row_idx + 25 > tank_x1 and row_idx + 5 < tank_x1 + 20 and col_idx > tank_y1 and col_idx < tank_y1 + 30) else
 		
 		elR when (row_idx + 25 > tank_x2 and row_idx + 5 < tank_x2 + 20 and col_idx > tank_y2 + 430 and col_idx < tank_y2 + 460) else background; --else elL when (playing_screen = '1' and backgroundsignal = '1') 

@@ -19,7 +19,7 @@ entity physics is
 	  tank_x2 : out unsigned(9 downto 0):= 10d"400";
 	  tank_y2 : out unsigned(9 downto 0):= 10d"600";
       ball_x2 : out unsigned(9 downto 0); -- row
-      ball_y2 : out unsigned(9 downto 0); -- col
+      ball_y2 : out unsigned(9 downto 0) := 10d"600"; -- col
 	  player : in std_logic  ;
       frame_clk : in std_logic
   );
@@ -90,10 +90,10 @@ process(frame_clk) begin
 	
 			if move_right = '1' then
 				tank_y2 <= tank_y2 + 1;
-				ball_y2 <= tank_y2;
+				ball_y2 <= tank_y2 ;
 			elsif move_left = '1' then
 				tank_y2 <= tank_y2 - 1;
-				ball_y2 <= tank_y2;
+				ball_y2 <= tank_y2 ;
 			end if;
 		
 			if angle_up  then
@@ -112,8 +112,11 @@ process(frame_clk) begin
 				v_row_p2 <= v_row_p2 + g;
 				if ball_y2 > 640 or ball_x2 > 480 then
 					v_col_p2 <= 35; v_row_p2 <= -11;
-					ball_x2 <= tank_x2; ball_y2 <= tank_y2;
+					ball_x2 <= tank_x2; ball_y2 <= tank_y2 + 410;
 					fired <= '0';
+					
+					else
+					ball_y2 <= tank_y2 + 410;
 				end if;
 			end if;
 		end if;
